@@ -1,0 +1,7 @@
+{
+  "name": "ionic-8-test-app-js",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
