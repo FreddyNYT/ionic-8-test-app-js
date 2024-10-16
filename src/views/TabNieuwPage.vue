@@ -41,22 +41,6 @@
 						<ion-button expand="block" @click="verzendProduct()">Bevestig</ion-button>
 					</ion-col>
 				</ion-row>
-
-				<!-- Het volgende deel staat hier enkel als DEMO voor de reactiviteit in Vue -->
-				<!-- Het is niet nodig voor jouw project, maar je kan het gebruiken om de reactiviteit te testen -->
-				<ion-row>
-					<ion-col>
-						<ion-item>
-							<ion-label>Product: {{ productNaam }}</ion-label>
-						</ion-item>
-						<ion-item>
-							<ion-label>Prijs: {{ productPrijs }}</ion-label>
-						</ion-item>
-						<ion-item>
-							<ion-label>Categorienummer: {{ productCategorie }}</ion-label>
-						</ion-item>
-					</ion-col>
-				</ion-row>
 			</ion-grid>
 
 		</ion-content>
@@ -64,20 +48,46 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonButton } from '@ionic/vue';
+import { ref, inject } from 'vue'
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonItem, IonInput, IonSelect, IonSelectOption, IonButton } from '@ionic/vue';
 
 const productNaam = ref('');
 const productPrijs = ref(0.00);
 const productCategorie = ref(0);
 
+const axios = inject('axios') // inject axios
+const postProduct = () => {
+	axios
+		.post('https://stevenop.be/wm/api2/products/', {
+			PR_naam: productNaam.value,
+			PR_CT_ID: productCategorie.value,
+			PR_prijs: productPrijs.value
+		})
+		.then(response => {
+			// controleer de response
+			console.log(response);
+			if (response.status !== 200) {
+				// TODO: er is iets fout gegaan, doe iets met deze info
+				// mogelijk met https://ionicframework.com/docs/api/toast
+				console.log(response.status);
+			} else {
+				// maak de velden leeg
+				productNaam.value = '';
+				productPrijs.value = '0.0';
+				productCategorie.value = 0;
+				//TODO: Bevestig dat het product is toegevoegd
+				// mogelijk met https://ionicframework.com/docs/api/toast
+			}
+		});
+}
 const logProduct = () => {
 	console.log(`naam: ${productNaam.value}, prijs: ${productPrijs.value}, categorie: ${productCategorie.value}`);
 };
 
 const verzendProduct = () => {
-	// TODO: dit verder uitwerken en effectief het product verzenden
-	logProduct();
-};
+	// TODO: input controle indien nodig
 
+	// verstuur naar de backend (API)
+	postProduct();
+};
 </script>
