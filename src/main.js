@@ -4,6 +4,11 @@ import router from './router';
 
 import { IonicVue } from '@ionic/vue';
 
+/* Axios toevoegen */
+import axios from 'axios';
+import VueAxios from 'vue-axios';
+
+
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
 
@@ -36,7 +41,11 @@ import './theme/variables.css';
 
 const app = createApp(App)
   .use(IonicVue)
-  .use(router);
+  .use(router)
+  .use(VueAxios, axios);
+
+/* maak 'axios' beschikbaar op plaatsen waar we niet met this.axios kunnen werken */
+app.provide('axios', app.config.globalProperties.axios); 
 
 router.isReady().then(() => {
   app.mount('#app');
