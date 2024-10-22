@@ -28,7 +28,7 @@
 
 <script setup>
 import { ref, inject } from 'vue';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonLabel, IonItem, onIonViewWillEnter } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonLabel, IonItem, onIonViewDidEnter } from '@ionic/vue';
 
 const producten = ref([]);
 
@@ -61,7 +61,7 @@ const getProducten = () => {
 			console.log(producten.value);
 		});
 }
-onIonViewWillEnter(() => {
+onIonViewDidEnter(() => {
 	// we halen de producten op bij het laden van dit scherm
 	// er zijn strategieën mogelijk om dit meer performant te cachen
 	getProducten();
