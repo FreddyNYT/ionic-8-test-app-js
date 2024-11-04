@@ -19,12 +19,6 @@
             </ion-tab-button>
          </ion-tab-bar>
       </ion-tabs>
-
-      <!-- Voeg knoppen buiten de ion-tab-bar toe -->
-      <div style="text-align: center; margin-top: 16px;">
-         <ion-button>Default</ion-button>
-         <ion-button shape="round">Round</ion-button>
-      </div>
    </ion-page>
 </template>
 

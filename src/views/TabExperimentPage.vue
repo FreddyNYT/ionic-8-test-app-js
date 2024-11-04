@@ -21,14 +21,23 @@
                <ion-toggle :checked="false" v-model="darkmode" @ion-change="toggleDarkMode();">Darkmode</ion-toggle>
             </ion-item>
             <ion-item>
+               <ion-toggle :checked="false" name="coffeeMode" class="coffee">Coffee mode <ion-icon
+                     :icon="cafe"></ion-icon></ion-toggle>
+            </ion-item>
+            <ion-item>
+               <ion-toggle :checked="false" name="discordMode" class="discord">Discord mode <ion-icon
+                     :icon="logoDiscord"></ion-icon></ion-toggle>
+            </ion-item>
+            <ion-item>
                <ion-button @click="askPermission" :disabled="geoEnabled">Enable Geolocation</ion-button><br>
+               <ion-button @click="getLocation" :disabled="geoDisabled">Haal locatie op</ion-button>
                <ion-button @click="calculateDistance" :disabled="!geoEnabled">Bereken Afstand tot Manneken Pis</ion-button>
             </ion-item>
             <ion-item>
                <ion-label>lat : {{ coords.latitude }} <br> lon : {{ coords.longitude }}</ion-label>
             </ion-item>
 
-            <!-- Weergave van de berekende afstand -->
+            <!-- Afstand weergeven -->
             <ion-item v-if="distance !== null">
                <ion-label>Afstand tot Manneken Pis: {{ distance.toFixed(2) }} km</ion-label>
             </ion-item>
@@ -47,7 +56,7 @@ const darkmode = ref(false);
 const coords = ref({ latitude: 4, longitude: 50 });
 const geoEnabled = ref(false);
 const geoDisabled = ref(true);
-const distance = ref(null);
+const distance = ref(null); // Hierin wordt de afstand opgeslagen
 
 const mannekenPisLat = 50.84500108085066;
 const mannekenPisLon = 4.34998572176742;
@@ -99,5 +108,13 @@ const toggleDarkMode = () => {
 <style scoped>
 ion-icon {
    color: #5B8;
+}
+
+.coffee ion-icon {
+   color: #6F4E37;
+}
+
+.discord ion-icon {
+   color: purple;
 }
 </style>
